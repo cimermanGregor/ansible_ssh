@@ -1,5 +1,5 @@
-Role Name
-=========
+SSH
+===
 
 SSH role manages sshd config file and ssh users keys.
 
