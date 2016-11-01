@@ -1,0 +1,13 @@
+###############################################
+# This file is managed with Ansible!          #
+# Any changes will be purged!                 #
+###############################################
+
+{% for key_tenant_name, key_tenants in item.iteritems() if key_tenant_name == "keys" %}
+{% for key_tenant in key_tenants %}
+{{ "\n# " + key_tenant }}
+{% for key_name in ssh_tenants[key_tenant] %}
+{{ ssh_keys[key_name] }}
+{% endfor %}
+{% endfor %}
+{% endfor %}

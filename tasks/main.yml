@@ -1,0 +1,31 @@
+---
+# tasks file for ssh
+
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install SSH server
+  yum: "name={{ package_name }} state=installed"
+  when: ssh_managed_ssh
+
+- name: Ensure SSH service is running
+  service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: true
+  when: ssh_managed_ssh
+
+- name: Ensure SSH banner is present
+  copy:
+    src: roles/ssh/files/banner
+    dest: /etc/issue.ssh
+    mode: 444
+
+- name: Generate sshd_conf
+  template: 
+    src=sshd_config.j2
+    dest=/etc/ssh/sshd_config
+  notify: restart ssh server
+  when: ssh_managed_ssh
+
+- include: keys.yml

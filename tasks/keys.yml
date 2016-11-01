@@ -1,0 +1,38 @@
+---
+# Setup authorized_keys files per user
+
+- name: Ensure root .ssh dir
+  file:
+    path: "/root/.ssh"
+    state: directory
+    mode: 0750
+  when: item.name == "root"
+  with_items: "{{ ssh_users }}"
+
+- name: Ensure root authorized_keys file
+  template:
+    src: authorized_keys.j2 
+    dest: "/root/.ssh/authorized_keys"
+    mode: 0640
+  when: item.name == "root"
+  with_items: "{{ ssh_users }}"
+
+- name: "Ensure users .ssh dir"
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    mode: 0750
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  when: item.name != "root"
+  with_items: "{{ ssh_users }}"
+
+- name: Ensure users authorized_keys file
+  template:
+    src: authorized_keys.j2 
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    mode: 0640
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  when: item.name != "root"
+  with_items: "{{ ssh_users }}"
