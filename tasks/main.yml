@@ -6,7 +6,11 @@
 
 - name: Install SSH server
   yum: "name={{ package_name }} state=installed"
-  when: ssh_managed_ssh
+  when: (ssh_managed_ssh) and (ansible_os_family == "RedHat")
+
+- name: Install SSH server
+  apt: "name={{ package_name }} state=installed"
+  when: (ssh_managed_ssh) and (ansible_os_family == "Debian")
 
 - name: Ensure SSH service is running
   service:
