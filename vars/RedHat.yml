@@ -1,3 +1,4 @@
 ---
-service_name: sshd
-package_name: openssh-server
+ssh_service_name: sshd
+ssh_package_name: openssh-server
+ssh_sftp_path: /usr/libexec/openssh/sftp-server
