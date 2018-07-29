@@ -5,16 +5,16 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Install SSH server
-  yum: "name={{ package_name }} state=installed"
+  yum: "name={{ ssh_package_name }} state=installed"
   when: (ssh_managed_ssh) and (ansible_os_family == "RedHat")
 
 - name: Install SSH server
-  apt: "name={{ package_name }} state=installed"
+  apt: "name={{ ssh_package_name }} state=installed"
   when: (ssh_managed_ssh) and (ansible_os_family == "Debian")
 
 - name: Ensure SSH service is running
   service:
-    name: "{{ service_name }}"
+    name: "{{ ssh_service_name }}"
     state: started
     enabled: true
   when: ssh_managed_ssh
