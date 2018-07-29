@@ -50,7 +50,7 @@ Example Playbook
 License
 -------
 
-MIT License
+GPL v3
 
 TODOs
 -----
