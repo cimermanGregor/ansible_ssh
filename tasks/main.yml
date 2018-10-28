@@ -24,6 +24,7 @@
     src: roles/ssh/files/banner
     dest: /etc/issue.ssh
     mode: 444
+  when: ssh_banner
 
 - name: Generate sshd_conf
   template: 
