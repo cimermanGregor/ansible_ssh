@@ -34,3 +34,6 @@
   when: ssh_managed_ssh
 
 - include: keys.yml
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"

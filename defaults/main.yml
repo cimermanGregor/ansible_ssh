@@ -6,7 +6,7 @@ ssh_listen_addresses:
   - 0.0.0.0
   - "::"
 ssh_listen_port: 22
-ssh_keys_only: true
+ssh_key_only_auth: true
 ssh_banner: true
 
 # ssh keys per user/system/group aka. tenat
