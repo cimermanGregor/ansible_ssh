@@ -24,9 +24,11 @@
     permanent: true
     state: enabled
   become: yes
+  when: ssh_listen_port != 22
 
 - name: Restart firewalld
   service:
     name: firewalld
     state: restarted
   become: yes
+  when: ssh_listen_port != 22
