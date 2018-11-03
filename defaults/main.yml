@@ -8,17 +8,17 @@ ssh_listen_addresses:
 ssh_listen_port: 22
 ssh_key_only_auth: true
 ssh_banner: true
+ssh_disable_update_motd: false
 
 # ssh keys per user/system/group aka. tenat
-ssh_tenants:
+ssh_users:
+  root:
+    - user1_key1
+    - user2
   user1:
     - user1_key1
     - user1_key2
   user2:
-    - user2
-  group1:
-    - user1_key1
-    - user1_key2
     - user2
 
 # ssh keys
@@ -26,7 +26,3 @@ ssh_keys:
   user1_key1: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/fwVmZN46Ji9yzI5bbmXdJlpaovF4vkmtFHbOCZHZvumYobEXGRj9BmZuHE3X8xTg8QTb/l6jGUAVJ4+EKwin5Xq8xzKHWne44nmR2WDpPLryhHnLVuqS7r2HNeURSK26zWMImaUAjndrEIZUhGOvjMpxkG9FIaJ5UjZHuelFiP9QYyzVLuoC+HtQrKBBtwf8mGlFVuHn1zHlooIwzs84BqjtjUi48jqb3khsQuzVvNgvL8lIW91egD/+2XDtUGpMTA4ftMAOJl4VACHXcyiuli0I+QLdmXNgzUt4H2zcOcQoFslkiKfBkrSCrZclm15X7u6NbM9hyWozdQqmDGbT user1@host1.example.com'
   user1_key2: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAddktkPbNnx0I4CohGhehRxBe5sH4iuSouAT/CAjCLEHoI1/GHwOOwSQ3T7DOtvhXA1KQvPeDunLal0SFcu8W3NPhnXtAKhGgqO+FxvlXW96YM+MDggCyUySsTtivX2KsrYvSphWrRxjt481uShnHGjNGDLwS/29I4+a74tg9HB/ob83cDCM7CagsHPby7G66hcBv4QAQWuInHsH7DaxBhjx4QDx7k1gJM7voCNAc1gDuHU+2ftamK8o8FDorqDxQL+F+US+0pEM6lvlTZhxV9S2lfn4REw1oWanLPk34Rz+thnEblimnuczceh9YXT1vGEFjR/fao6GRbiQEuXcL user1@host2.example.com'
   user2: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGRcVG2zLUY7v7T1oL+WDmMdRu0YaNkDxMwdcGi4P++K/hz4ExRDR2acJpbIXrdM0UAUQ/KJN/EdPCENkuQysA2PzSz/Edg8LHVc4ZuO3rkUBhtEmNn5ZXz2gGsTJ0cGDybq16HccdzTXEfmHn18xwnYtl47XLejNjCPkBFCs5Scfc9+LZq/6HrlbjPzh5pX52ccY9hS4dP0Vbef/yH2D6d27tNZBwJRw5wWo6BVS/IYHAGzKzjJOy7X3P2fysETCGYtgcVB0F5ZbTrgbcU1rO9lGCREuuVpoZlAnAXZlzllhsKFzait4sy3VqdLSwD4wD835y+fV5UUre5M6Y9Gzt user2@host2.example.com'
-
-ssh_users:
-  - { name: user1, keys: [user1] }
-  - { name: user2, keys: [user2, group1] }

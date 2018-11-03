@@ -8,12 +8,15 @@ galaxy_info:
 
   min_ansible_version: 1.2
 
-  #github_branch:
+  github_branch: master
 
   platforms:
-  - name: CentOS
-    versions:
-    - 7
+    - name: CentOS
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - 16.04
   
   galaxy_tags: [ssh, keys]
 

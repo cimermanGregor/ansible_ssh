@@ -6,7 +6,8 @@
     path: "/root/.ssh"
     state: directory
     mode: 0750
-  when: item.name == "root"
+  become: yes
+  when: item == "root"
   with_items: "{{ ssh_users }}"
 
 - name: Ensure root authorized_keys file
@@ -14,25 +15,38 @@
     src: authorized_keys.j2 
     dest: "/root/.ssh/authorized_keys"
     mode: 0640
-  when: item.name == "root"
+  become: yes
+  when: item == "root"
+  with_items: "{{ ssh_users }}"
+
+- name: "Ensure user"
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+    groups: ssh
+    append: yes
+  become: yes
+  when: item != "root"
   with_items: "{{ ssh_users }}"
 
 - name: "Ensure users .ssh dir"
   file:
-    path: "/home/{{ item.name }}/.ssh"
+    path: "/home/{{ item }}/.ssh"
     state: directory
     mode: 0750
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
-  when: item.name != "root"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  become: yes
+  when: item != "root"
   with_items: "{{ ssh_users }}"
 
 - name: Ensure users authorized_keys file
   template:
     src: authorized_keys.j2 
-    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    dest: "/home/{{ item }}/.ssh/authorized_keys"
     mode: 0640
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
-  when: item.name != "root"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  become: yes
+  when: item != "root"
   with_items: "{{ ssh_users }}"

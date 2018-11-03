@@ -2,5 +2,6 @@
 # handlers file for ssh
 
 - name: restart ssh server
-  service: "name={{ service_name }} state=restarted"
+  service: "name={{ ssh_service_name }} state=restarted"
+  become: yes
   when: ssh_managed_ssh

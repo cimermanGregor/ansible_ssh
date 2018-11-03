@@ -6,6 +6,7 @@ AddressFamily any
 {% for address in ssh_listen_addresses: %}
 ListenAddress {{ address }}
 {% endfor %}
+AllowUsers {{ ssh_users.keys()|join(' ') }}
 Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key

@@ -1,0 +1,8 @@
+---
+
+- name: Disable update motd
+  shell: find /etc/update-motd.d -type f -print0 | xargs -0 chmod -x
+  register: chmod_result
+  changed_when: "chmod_result.stdout != \"\""
+  become: yes
+  when: ssh_disable_update_motd

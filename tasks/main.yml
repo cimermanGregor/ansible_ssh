@@ -21,15 +21,17 @@
 
 - name: Ensure SSH banner is present
   copy:
-    src: roles/ssh/files/banner
+    src: banner
     dest: /etc/issue.ssh
     mode: 444
+  become: yes
   when: ssh_banner
 
 - name: Generate sshd_conf
   template: 
-    src=sshd_config.j2
-    dest=/etc/ssh/sshd_config
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+  become: yes
   notify: restart ssh server
   when: ssh_managed_ssh
 
@@ -37,3 +39,6 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- include: debian.yml
+  when: ansible_os_family == "Debian"
