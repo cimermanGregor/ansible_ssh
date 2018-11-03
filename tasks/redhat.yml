@@ -3,6 +3,7 @@
 - name: Install dependencies for non standard port number
   yum:
     name: "{{ item }}"
+  become: yes
   with_items:
     - libselinux-python
     - policycoreutils-python
@@ -10,8 +11,16 @@
 
 - name: Selinux modify ssh port policy
   seport:
-    ports: ssh_listen_port
+    ports: "{{ ssh_listen_port }}"
     proto: tcp
     setype: ssh_port_t
     state: present
+  become: yes
   when: ssh_listen_port != 22
+
+- name: Firewalld allow port
+  firewalld:
+    port: "{{ ssh_listen_port }}/tcp"
+    permanent: true
+    state: enabled
+  become: yes
