@@ -6,37 +6,38 @@ SSH role manages sshd config file and ssh users keys.
 Requirements
 ------------
 
-All users mus already exist on the system. Also for now only /home/[username] folders are supported.
+All managed users will be added to the system. Only /home/[username] folders are supported.
 
 Role Variables
 --------------
 
 #### SSH service:
-ssh_managed_ssh: Specifies if SSH configuration file is managed (default: true). Useful if one wants to manage SSH keys only.
-ssh_listen_addresses: Specifies SSH listening addresses (default: 0.0.0.0 and ::)
-ssh_listen_port: Specifies SSH port (default: 22)
-ssh_keys_only: Enables mandatory SSH key usage (default: true)
+
+* `ssh_managed_ssh`: Specifies if SSH configuration file is managed (default: true). Useful if one wants to manage SSH keys only.
+* `ssh_listen_addresses`: Specifies SSH listening addresses (default: 0.0.0.0 and ::)
+* `ssh_listen_port`: Specifies SSH port (default: 22)
+* `ssh_key_only_auth`: Enable key only authentication (default: true)
+* `ssh_banner`: Set custom welcome banner (default: true)
+* `ssh_disable_update_motd`: Disables default debian welcome motd (default: false)
+
 
 #### SSH Key management:
-ssh_tenants: Dict of tenants example:
+`ssh_users`: Dict of users and used keys example:
 ```
-group1:
-	key1
-	key2
-group2:
-	key2
-	key3
+ssh_users:
+  root:
+    - user1_key1
+  user1:
+    - user1_key1
+    - user1_key2
+  user2:
+    - user2
 ```
-ssh_keys: Dict of public keys
+`ssh_keys`: Dict of public keys
 ```
-key1: "ssh-rsa ... key@host"
-key2: ...
-key3: ...
-```
-ssh_users: Data structure specifying which key tenants setup to hosts
-```
-- { name: user1, keys: [group1, group2] }
-...
+user1_key1: "ssh-rsa ... key@host"
+user1_key2: ...
+user2: ...
 ```
 
 Example Playbook
@@ -44,7 +45,7 @@ Example Playbook
 ```
 - hosts: servers
   roles:
-  - { role: ssh, ssh_users: [{name: root, keys: [admins, db_managers]}, {name: peter, keys: [peter]}] }
+  - { role: ssh, ssh_users: [{peter: [peter]}], ssh_keys: {peter: "ssh-rsa ..."} }
 ```
 
 License
