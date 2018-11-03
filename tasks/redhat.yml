@@ -24,3 +24,9 @@
     permanent: true
     state: enabled
   become: yes
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+  become: yes
