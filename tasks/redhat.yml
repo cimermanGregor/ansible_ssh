@@ -14,3 +14,4 @@
     proto: tcp
     setype: ssh_port_t
     state: present
+  when: ssh_listen_port != 22

@@ -19,7 +19,13 @@
   when: item == "root"
   with_items: "{{ ssh_users }}"
 
-- name: "Ensure user"
+- name: Ensure ssh group
+  group:
+    name: ssh
+    state: present
+  become: yes
+
+- name: Ensure user
   user:
     name: "{{ item }}"
     shell: /bin/bash
