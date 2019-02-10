@@ -2,11 +2,8 @@
 
 - name: Install dependencies for non standard port number
   yum:
-    name: "{{ item }}"
+    name: ['libselinux-python', 'policycoreutils-python']
   become: yes
-  with_items:
-    - libselinux-python
-    - policycoreutils-python
   when: ssh_listen_port != 22
 
 - name: Selinux modify ssh port policy
